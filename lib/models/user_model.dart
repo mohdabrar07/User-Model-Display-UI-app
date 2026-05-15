@@ -1,3 +1,5 @@
+import 'address_model.dart';
+
 class UserModel {
   final int id;
   final String name;
@@ -13,31 +15,26 @@ class UserModel {
     this.address,
   });
 
-  // This factory constructor handles the "Unpacking"
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
       name: json['name'],
       email: json['email'],
       phone: json['phone'],
-      // Unpacking the nested box
+      
       address: json['address'] != null 
           ? Address.fromJson(json['address']) 
           : null,
     );
   }
-}
 
-class Address {
-  final String city;
-  final String street;
-
-  Address({required this.city, required this.street});
-
-  factory Address.fromJson(Map<String, dynamic> json) {
-    return Address(
-      city: json['city'],
-      street: json['street'],
-    );
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'address': address?.toJson(),
+    };
   }
 }
